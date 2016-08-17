@@ -1,0 +1,11 @@
+#!/bin/bash
+export name=mt  
+export folder=/some/share/name/  
+file=`date +%Y%m%d-$name`  
+ssh userx@mt export file=$file  
+sleep 5  
+sftp userx@mt:$file.rsc $folder  
+ssh userx@mt system backup save name=$file dont-encrypt=yes  
+sleep 10  
+sftp userx@mt:$file.backup $folder  
+chown someone:users $folder$file.rsc $folder$file.backup  
